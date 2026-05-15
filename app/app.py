@@ -28,5 +28,6 @@ def home():
 def health():
     return jsonify({"status": "ok", "model": "churn-classifier"})
 
+# --- 2. Ruta 
 if __name__ == "__main__":
     app.run(debug=True, port= 5000)
