@@ -78,7 +78,6 @@ with st.sidebar:
         label_visibility="collapsed",
     )
     st.markdown("---")
-    st.caption("Proyecto de productivización\nFlask + Streamlit")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -126,18 +125,18 @@ if pagina == "🏠 Inicio":
 # PÁGINA 2 — PREDICCIÓN
 # ══════════════════════════════════════════════════════════════════════════════
 elif pagina == "📊 Predicción":
-    st.title("📊 Predicción de Churn")
+    st.title("📊 Predicción de 'churn'")
 
     # ── Sección 1: Por credit score (PATH) ────────────────────────────────────
     st.subheader("1 · Por Credit Score")
-    st.caption("Llama a `GET /predict/<credit_score>`")
+    st.caption("Medida numérica que estima el riesgo financiero, la capacidad de pago y la probabilidad de impago\nLlama a `GET /predict/<credit_score>`")
 
     credit_score = st.slider("Credit Score", 350, 850, 650, step=10)
 
     if st.button("Predecir por credit score"):
         with st.spinner("Consultando la API..."):
             try:
-                r = requests.get(f"{API_URL}/predict/{credit_score}", timeout=30)
+                r = requests.get(f"{API_URL}/api/v1/predict/{credit_score}", timeout=15)
                 result = r.json()
                 if r.status_code == 200:
                     mostrar_resultado(result)
