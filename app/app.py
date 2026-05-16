@@ -124,7 +124,7 @@ def predict_credit_score(credit_score):
 # Ejemplo: http://127.0.0.1:5000/api/v1/predict/filter?age=45&country=Germany
 # -----------------------------------------------------------------------
 
-@app.route('/api/v1/predict/filter', methods = ['GET'])
+@app.route('/api/v1/predict/filter?', methods = ['GET'])
 def predict_quey():
     # Parámetros
     age     = request.args.get('age', 38, type= int)   # si no viene, usa 38 por defecto
@@ -132,12 +132,12 @@ def predict_quey():
     balance = request.args.get('balance', 76485.0, type=float) # si  no viene, usa la media
 
     # Validación de parámetros
-    paises_validos = ['France', 'Spain', 'Germany']
-    if country not in paises_validos:
-        return jsonify({"error": f"country debe ser uno de {paises_validos}"}), 400
+    # paises_validos = ['France', 'Spain', 'Germany']
+    # if country not in paises_validos:
+    #     return jsonify({"error": f"country debe ser uno de {paises_validos}"}), 400
 
-    if age < 18 or age > 92:
-        return jsonify({"error": "age debe estar entre 18 y 92"}), 400
+    # if age < 18 or age > 92:
+    #     return jsonify({"error": "age debe estar entre 18 y 92"}), 400
 
     #Creamos un cliente
     Cliente = pd.DataFrame([{

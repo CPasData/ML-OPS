@@ -129,7 +129,8 @@ elif pagina == "📊 Predicción":
 
     # ── Sección 1: Por credit score (PATH) ────────────────────────────────────
     st.subheader("1 · Por Credit Score")
-    st.caption("Medida numérica que estima el riesgo financiero, la capacidad de pago y la probabilidad de impago\nLlama a `GET /predict/<credit_score>`")
+    st.caption("Medida numérica que estima el riesgo financiero, la capacidad de pago y la probabilidad de impago \n"
+    "Llama a `GET /api/v1/predict/<credit_score>`")
 
     credit_score = st.slider("Credit Score", 350, 850, 650, step=10)
 
@@ -152,7 +153,7 @@ elif pagina == "📊 Predicción":
 
     # ── Sección 2: Por filtros (QUERY PARAMS) ─────────────────────────────────
     st.subheader("2 · Por Filtros")
-    st.caption("Llama a `GET /predict/filter?age=45&country=Germany`")
+    st.caption("Llama a `GET /predict/filter?`")
 
     col1, col2 = st.columns(2)
     with col1:
