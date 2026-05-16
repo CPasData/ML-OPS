@@ -158,7 +158,7 @@ elif pagina == "📊 Predicción":
     col1, col2 = st.columns(2)
     with col1:
         age     = st.slider("Edad", 18, 80, 40)
-        balance = st.slider("Saldo (€)", 0, 250000, 50000, step=5000)
+        balance = st.slider("Saldo (€)", 0, 250000, 50000, step=1000)
     with col2:
         country = st.selectbox("País", ["Spain", "Germany", "France"])
 
