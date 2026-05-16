@@ -87,9 +87,8 @@ with st.sidebar:
 if pagina == "🏠 Inicio":
     st.title("🏦 Bank Churn Prediction App")
     st.markdown("""
-    Esta aplicación permite predecir si un cliente de un banco abandonará
-    sus servicios (**churn**) utilizando un modelo de Machine Learning desplegado
-    en una API REST construida con Flask.
+    **¡Hola!** Si estás aquí es porque te preocupa la fidelidad de tus clientes.
+    No te preocupes, estoy aquí para ayudarte. Esta app permite saber la probabilidad de abandono de un cliente. **Pruébame**
     """)
 
     st.markdown("---")
