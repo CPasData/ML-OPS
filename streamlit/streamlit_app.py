@@ -74,7 +74,7 @@ with st.sidebar:
     st.markdown("---")
     pagina = st.radio(
         "Navegación",
-        ["🏠 Inicio", "🔮 Predicción", "📋 Historial"],
+        ["🏠 Inicio", "📊 Predicción", "📋 Historial"],
         label_visibility="collapsed",
     )
     st.markdown("---")
@@ -126,8 +126,8 @@ if pagina == "🏠 Inicio":
 # ══════════════════════════════════════════════════════════════════════════════
 # PÁGINA 2 — PREDICCIÓN
 # ══════════════════════════════════════════════════════════════════════════════
-elif pagina == "🔮 Predicción":
-    st.title("🔮 Predicción de Churn")
+elif pagina == "📊 Predicción":
+    st.title("📊 Predicción de Churn")
 
     # ── Sección 1: Por credit score (PATH) ────────────────────────────────────
     st.subheader("1 · Por Credit Score")
