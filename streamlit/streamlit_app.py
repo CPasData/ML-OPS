@@ -226,7 +226,6 @@ elif pagina == "📊 Predicción":
             except Exception as e:
                 st.error(f"Error: {e}")
 
-
 # ══════════════════════════════════════════════════════════════════════════════
 # PÁGINA 3 — HISTORIAL
 # ══════════════════════════════════════════════════════════════════════════════
@@ -295,49 +294,46 @@ elif pagina == "📋 Historial":
                 else:
                     st.error(f"Error {r.status_code}")
             except Exception as e:
-                st.error(f"Error: {e}")
-                
-'''
-elif pagina == "📋 Historial":
-    st.title("📋 Historial de Predicciones")
-
-    # ── Sección 1: Tabla de predicciones ──────────────────────────────────────
-    st.subheader("1 · Predicciones de esta sesión")
-    st.caption("Llama a `GET /predicciones`")
-
-    if st.session_state.historial:
-        df = pd.DataFrame(st.session_state.historial)
-        df["churn"] = df["churn"].map({True: "✅ Sí", False: "❌ No"})
-        df["prob"]  = df["prob"].apply(lambda x: f"{x*100:.1f}%")
-        df.columns  = ["Endpoint", "Payload", "Churn", "Probabilidad"]
-        st.dataframe(df[["Endpoint", "Churn", "Probabilidad"]], use_container_width=True)
-
-        if st.button("🗑️ Limpiar historial"):
-            st.session_state.historial = []
-            st.rerun()
-    else:
-        st.info("Aún no hay predicciones en esta sesión. Ve a la página de Predicción y realiza algunas consultas.")
-
-    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+                st.error(f"Error: {e}")   
 
 
-    # ── Sección 2: Contador total ──────────────────────────────────────────────
-    st.subheader("2 · Contador total de predicciones")
-    st.caption("Llama a `GET /predicciones/count`")
+# elif pagina == "📋 Historial":
+#     st.title("📋 Historial de Predicciones")
 
-    if st.button("🔢 Obtener contador de la API"):
-        with st.spinner("Consultando la API..."):
-            try:
-                r = requests.get(f"{API_URL}/api/v1/predicciones/count", timeout=10)
-                if r.status_code == 200:
-                    data  = r.json()
-                    st.write(data)
-                    total = data.get("total_predicciones", data.get("count", "—"))
-                    st.metric("Total de predicciones realizadas", total)
-                else:
-                    st.error(f"Error {r.status_code}: {r.json().get('error', 'desconocido')}")
-            except requests.exceptions.Timeout:
-                st.warning("⏳ Timeout. Espera 30 s e inténtalo de nuevo.")
-            except Exception as e:
-                st.error(f"Error: {e}")
-'''
+#     # ── Sección 1: Tabla de predicciones ──────────────────────────────────────
+#     st.subheader("1 · Predicciones de esta sesión")
+#     st.caption("Llama a `GET /predicciones`")
+
+#     if st.session_state.historial:
+#         df = pd.DataFrame(st.session_state.historial)
+#         df["churn"] = df["churn"].map({True: "✅ Sí", False: "❌ No"})
+#         df["prob"]  = df["prob"].apply(lambda x: f"{x*100:.1f}%")
+#         df.columns  = ["Endpoint", "Payload", "Churn", "Probabilidad"]
+#         st.dataframe(df[["Endpoint", "Churn", "Probabilidad"]], use_container_width=True)
+
+#         if st.button("🗑️ Limpiar historial"):
+#             st.session_state.historial = []
+#             st.rerun()
+#     else:
+#         st.info("Aún no hay predicciones en esta sesión. Ve a la página de Predicción y realiza algunas consultas.")
+
+#     st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+
+#     # ── Sección 2: Contador total ──────────────────────────────────────────────
+#     st.subheader("2 · Contador total de predicciones")
+#     st.caption("Llama a `GET /predicciones/count`")
+
+#     if st.button("🔢 Obtener contador de la API"):
+#         with st.spinner("Consultando la API..."):
+#             try:
+#                 r = requests.get(f"{API_URL}/api/v1/predicciones/count", timeout=10)
+#                 if r.status_code == 200:
+#                     data  = r.json()
+#                     total = data.get("total_predicciones", data.get("count", "—"))
+#                     st.metric("Total de predicciones realizadas", total)
+#                 else:
+#                     st.error(f"Error {r.status_code}: {r.json().get('error', 'desconocido')}")
+#             except requests.exceptions.Timeout:
+#                 st.warning("⏳ Timeout. Espera 30 s e inténtalo de nuevo.")
+#             except Exception as e:
+#                 st.error(f"Error: {e}")
