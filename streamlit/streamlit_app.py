@@ -263,7 +263,7 @@ elif pagina == "📋 Historial":
                 if r.status_code == 200:
                     data  = r.json()
                     st.write(data)
-                    total = data.get("total", data.get("count", "—"))
+                    total = data.get("total_predicciones", data.get("count", "—"))
                     st.metric("Total de predicciones realizadas", total)
                 else:
                     st.error(f"Error {r.status_code}: {r.json().get('error', 'desconocido')}")
