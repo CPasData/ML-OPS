@@ -129,7 +129,7 @@ elif pagina == "📊 Predicción":
 
     # ── Sección 1: Por credit score (PATH) ────────────────────────────────────
     st.subheader("1 · Por Credit Score")
-    st.caption("Medida numérica que estima el riesgo financiero, la capacidad de pago y la probabilidad de impago \n"
+    st.caption("Medida numérica que estima el riesgo financiero, la capacidad de pago y la probabilidad de impago. \n"
     "Llama a `GET /api/v1/predict/<credit_score>`")
 
     credit_score = st.slider("Credit Score", 350, 850, 650, step=10)
@@ -140,6 +140,7 @@ elif pagina == "📊 Predicción":
                 r = requests.get(f"{API_URL}/api/v1/predict/{credit_score}", timeout=15)
                 result = r.json()
                 if r.status_code == 200:
+                    st.write(result)
                     mostrar_resultado(result)
                     guardar_historial(f"/predict/{credit_score}", {"credit_score": credit_score}, result)
                 else:
