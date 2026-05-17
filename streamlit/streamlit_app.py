@@ -242,7 +242,7 @@ elif pagina == "📋 Historial":
         df = pd.DataFrame(st.session_state.historial)
         df["churn"] = df["churn"].map({True: "✅ Sí", False: "❌ No"})
         df["prob"]  = df["prob"].apply(lambda x: f"{x*100:.1f}%")
-        df.columns  = ["Endpoint", "Payload", "Churn", "Probabilidad", "Riesgo"]
+        df.columns  = ["Endpoint", "Payload", "Churn", "Probabilidad"]
         st.dataframe(df[["Endpoint", "Churn", "Probabilidad"]], use_container_width=True)
 
         if st.button("🗑️ Limpiar historial"):
