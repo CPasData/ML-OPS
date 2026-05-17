@@ -262,6 +262,7 @@ elif pagina == "📋 Historial":
                 r = requests.get(f"{API_URL}/api/v1/predicciones/count", timeout=10)
                 if r.status_code == 200:
                     data  = r.json()
+                    st.write(data)
                     total = data.get("total", data.get("count", "—"))
                     st.metric("Total de predicciones realizadas", total)
                 else:
