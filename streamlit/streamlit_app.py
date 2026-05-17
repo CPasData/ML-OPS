@@ -44,7 +44,7 @@ if "historial" not in st.session_state:
 
 # ── Helper: mostrar resultado ──────────────────────────────────────────────────
 def mostrar_resultado(result):
-    prob  = result["churn_probability"]
+    prob  = result["probabilidad churn"]
     churn = result["churn"]
     emoji = "🔴" if churn else "🟢"
     pct   = f"{prob * 100:.1f}%"
