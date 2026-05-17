@@ -64,7 +64,7 @@ def guardar_historial(endpoint, payload, result):
         "endpoint": endpoint,
         "payload":  payload,
         "churn":    result.get("churn"),
-        "prob":     result.get("probabilidad churn"),
+        "prob":     result.get("probabilidad_churn"),
     })
 
 # ── Navegación lateral ─────────────────────────────────────────────────────────
@@ -140,7 +140,6 @@ elif pagina == "📊 Predicción":
                 r = requests.get(f"{API_URL}/api/v1/predict/{credit_score}", timeout=15)
                 result = r.json()
                 if r.status_code == 200:
-                    st.write(result)
                     mostrar_resultado(result)
                     guardar_historial(f"{API_URL}/api/v1/predict/{credit_score}", {"credit_score": credit_score}, result)
                 else:
@@ -170,7 +169,6 @@ elif pagina == "📊 Predicción":
                 r = requests.get(f"{API_URL}/api/v1/predict/filter", params=params, timeout=15)
                 result = r.json()
                 if r.status_code == 200:
-                    st.write(result)
                     mostrar_resultado(result)
                     guardar_historial(f"{API_URL}/api/v1/predict/filter", params, result)
                 else:
