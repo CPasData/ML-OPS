@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import pandas as pd
 
 # ── Configuración ──────────────────────────────────────────────────────────────
 API_URL = "https://ml-ops-iwax.onrender.com"
@@ -237,7 +238,6 @@ elif pagina == "📋 Historial":
     st.caption("Llama a `GET /predicciones`")
 
     if st.session_state.historial:
-        import pandas as pd
         df = pd.DataFrame(st.session_state.historial)
         df["churn"] = df["churn"].map({True: "✅ Sí", False: "❌ No"})
         df["prob"]  = df["prob"].apply(lambda x: f"{x*100:.1f}%")
@@ -259,7 +259,7 @@ elif pagina == "📋 Historial":
     if st.button("🔢 Obtener contador de la API"):
         with st.spinner("Consultando la API..."):
             try:
-                r = requests.get(f"{API_URL}api/v1/predicciones/count", timeout=10)
+                r = requests.get(f"{API_URL}/api/v1/predicciones/count", timeout=10)
                 if r.status_code == 200:
                     data  = r.json()
                     total = data.get("total", data.get("count", "—"))
