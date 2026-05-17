@@ -115,7 +115,7 @@ def predict_credit_score(credit_score):
         'credit_score': credit_score,
         'churn': int(prediccion),
         'resultado': 'Abandona el banco' if prediccion == 1 else 'Se queda',
-        'probabilidad churn': round(float(probabilidad),4)
+        'probabilidad_churn': round(float(probabilidad),4)
     })
 
 # -----------------------------------------------------------------------
