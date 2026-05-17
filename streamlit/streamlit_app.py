@@ -140,6 +140,7 @@ elif pagina == "📊 Predicción":
                 r = requests.get(f"{API_URL}/api/v1/predict/{credit_score}", timeout=15)
                 result = r.json()
                 if r.status_code == 200:
+                    st.write(result)
                     mostrar_resultado(result)
                     guardar_historial(f"{API_URL}/api/v1/predict/{credit_score}", {"credit_score": credit_score}, result)
                 else:
