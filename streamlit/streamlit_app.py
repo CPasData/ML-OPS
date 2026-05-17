@@ -200,17 +200,16 @@ elif pagina == "📊 Predicción":
 
     if st.button("Predecir con formulario completo"):
         payload = {
-            "CreditScore":       cs2,
-            "Age":               age2,
-            "Tenure":            tenure,
-            "Balance":           balance2,
-            "NumOfProducts":     n_products,
-            "HasCrCard":         has_cc,
-            "IsActiveMember":    is_active,
-            "EstimatedSalary":   salary,
-            "Geography_Germany": 1 if country2 == "Germany" else 0,
-            "Geography_Spain":   1 if country2 == "Spain"   else 0,
-            "Gender_Male":       1 if gender   == "Male"    else 0,
+            "credit_score":         cs2,
+            "age":                  age2,
+            "tenure":               tenure,
+            "balance":              balance2,
+            "products_number":      n_products,
+            "credit_card":          has_cc,
+            "active_member":        is_active,
+            "estimated_salary":     salary,
+            "country":              country2,
+            "gender":               gender
         }
         with st.spinner("Consultando la API..."):
             try:
