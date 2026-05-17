@@ -31,7 +31,6 @@ st.markdown("""
         margin-top: 1rem;
     }
     .risk-alto  { background:#ffe5e5; border-left: 6px solid #e74c3c; }
-    .risk-medio { background:#fff4e0; border-left: 6px solid #f39c12; }
     .risk-bajo  { background:#e8f8f0; border-left: 6px solid #2ecc71; }
     .big-number { font-size: 3rem; font-weight: 700; margin: 0; }
     .risk-label { font-size: 1.1rem; color: #555; margin-top: 4px; }
@@ -45,14 +44,16 @@ if "historial" not in st.session_state:
 
 # ── Helper: mostrar resultado ──────────────────────────────────────────────────
 def mostrar_resultado(result):
-    prob  = result["probabilidad churn"]
-    risk  = result["risk"]
-    emoji = "🔴" if risk == "alto" else "🟡" if risk == "medio" else "🟢"
+    prob  = result["churn_probability"]
+    churn = result["churn"]
+    emoji = "🔴" if churn else "🟢"
     pct   = f"{prob * 100:.1f}%"
+    label = "ABANDONA EL BANCO" if churn else "SE QUEDA"
+
     st.markdown(f"""
-    <div class="result-box risk-{risk}">
+    <div class="result-box {'risk-alto' if churn else 'risk-bajo'}">
         <p class="big-number">{emoji} {pct}</p>
-        <p class="risk-label">Probabilidad de churn &nbsp;·&nbsp; Riesgo <strong>{risk.upper()}</strong></p>
+        <p class="risk-label">Predicción: <strong>{label}</strong></p>
     </div>
     """, unsafe_allow_html=True)
     with st.expander("Ver respuesta completa de la API"):
@@ -64,7 +65,6 @@ def guardar_historial(endpoint, payload, result):
         "payload":  payload,
         "churn":    result.get("churn"),
         "prob":     result.get("churn_probability"),
-        "risk":     result.get("risk"),
     })
 
 # ── Navegación lateral ─────────────────────────────────────────────────────────
@@ -243,9 +243,8 @@ elif pagina == "📋 Historial":
         df = pd.DataFrame(st.session_state.historial)
         df["churn"] = df["churn"].map({True: "✅ Sí", False: "❌ No"})
         df["prob"]  = df["prob"].apply(lambda x: f"{x*100:.1f}%")
-        df["risk"]  = df["risk"].str.upper()
         df.columns  = ["Endpoint", "Payload", "Churn", "Probabilidad", "Riesgo"]
-        st.dataframe(df[["Endpoint", "Churn", "Probabilidad", "Riesgo"]], use_container_width=True)
+        st.dataframe(df[["Endpoint", "Churn", "Probabilidad"]], use_container_width=True)
 
         if st.button("🗑️ Limpiar historial"):
             st.session_state.historial = []
