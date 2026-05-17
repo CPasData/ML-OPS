@@ -141,7 +141,7 @@ elif pagina == "📊 Predicción":
                 result = r.json()
                 if r.status_code == 200:
                     mostrar_resultado(result)
-                    guardar_historial(f"/predict/{credit_score}", {"credit_score": credit_score}, result)
+                    guardar_historial(f"{API_URL}/api/v1/predict/{credit_score}", {"credit_score": credit_score}, result)
                 else:
                     st.error(f"Error {r.status_code}: {result.get('error', 'desconocido')}")
             except requests.exceptions.Timeout:
@@ -166,7 +166,7 @@ elif pagina == "📊 Predicción":
         with st.spinner("Consultando la API..."):
             try:
                 params = {"age": age, "country": country, "balance": balance}
-                r = requests.get(f"{API_URL}/predict/filter", params=params, timeout=30)
+                r = requests.get(f"{API_URL}/predict/filter?age={age}&country={country}&balance={balance}", params=params, timeout=30)
                 result = r.json()
                 if r.status_code == 200:
                     mostrar_resultado(result)
