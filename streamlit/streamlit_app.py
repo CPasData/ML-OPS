@@ -228,7 +228,7 @@ elif pagina == "📊 Predicción":
 
 
     # ── Sección 4: Predicción completa (archivo CSV)
-    st.subheader("2 · Predicción masiva por CSV")
+    st.subheader("4 · Predicción masiva por CSV")
     st.caption("Sube un CSV con los datos de varios clientes y obtén todas las predicciones de golpe")
 
     with st.expander("📄 Ver formato esperado del CSV"):
@@ -268,7 +268,7 @@ elif pagina == "📊 Predicción":
                             data = r.json()
                             resultados.append({
                                 **payload,
-                                "churn":        "✅ Sí" if data.get("churn") else "❌ No",
+                                "churn":        "🔴 Abandona" if data.get("churn") else "🟢 Se queda",
                                 "probabilidad": f"{data.get('probabilidad_churn', 0)*100:.1f}%",
                             })
                         else:
