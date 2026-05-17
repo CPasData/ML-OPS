@@ -226,6 +226,79 @@ elif pagina == "📊 Predicción":
             except Exception as e:
                 st.error(f"Error: {e}")
 
+
+    # ── Sección 4: Predicción completa (archivo CSV)
+    st.subheader("2 · Predicción masiva por CSV")
+    st.caption("Sube un CSV con los datos de varios clientes y obtén todas las predicciones de golpe")
+
+    with st.expander("📄 Ver formato esperado del CSV"):
+        import pandas as pd
+        ejemplo = pd.DataFrame([{
+            "credit_score": 650, "age": 35, "tenure": 5,
+            "balance": 50000, "products_number": 2, "credit_card": 1,
+            "active_member": 1, "estimated_salary": 60000,
+            "country": "Spain", "gender": "Male"
+        }])
+        st.dataframe(ejemplo, use_container_width=True)
+        st.caption("Las columnas deben tener exactamente estos nombres.")
+
+    csv_file = st.file_uploader("Sube tu CSV", type=["csv"])
+
+    if csv_file is not None:
+        import pandas as pd
+        try:
+            df_csv = pd.read_csv(csv_file)
+            st.write(f"**{len(df_csv)} clientes detectados.** Vista previa:")
+            st.dataframe(df_csv.head(), use_container_width=True)
+
+            if st.button("🚀 Predecir todos"):
+                resultados = []
+                errores    = 0
+                progress   = st.progress(0, text="Procesando...")
+
+                for i, row in df_csv.iterrows():
+                    try:
+                        payload = row.to_dict()
+                        r = requests.post(
+                            f"{API_URL}/api/v1/predict",
+                            json=payload,
+                            timeout=15,
+                        )
+                        if r.status_code == 200:
+                            data = r.json()
+                            resultados.append({
+                                **payload,
+                                "churn":        "✅ Sí" if data.get("churn") else "❌ No",
+                                "probabilidad": f"{data.get('probabilidad_churn', 0)*100:.1f}%",
+                            })
+                        else:
+                            errores += 1
+                            resultados.append({**payload, "churn": "⚠️ Error", "probabilidad": "—"})
+                    except Exception:
+                        errores += 1
+                        resultados.append({**payload, "churn": "⚠️ Error", "probabilidad": "—"})
+
+                    progress.progress((i + 1) / len(df_csv), text=f"Procesando cliente {i+1}/{len(df_csv)}...")
+
+                progress.empty()
+                df_result = pd.DataFrame(resultados)
+
+                st.success(f"✅ {len(df_csv) - errores} predicciones correctas · {errores} errores")
+                st.dataframe(df_result, use_container_width=True)
+
+                csv_out = df_result.to_csv(index=False).encode("utf-8")
+                st.download_button(
+                    label="⬇️ Descargar resultados como CSV",
+                    data=csv_out,
+                    file_name="predicciones_churn.csv",
+                    mime="text/csv",
+                )
+
+        except Exception as e:
+            st.error(f"Error al leer el CSV: {e}")
+
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+
 # ══════════════════════════════════════════════════════════════════════════════
 # PÁGINA 3 — HISTORIAL
 # ══════════════════════════════════════════════════════════════════════════════
@@ -295,45 +368,3 @@ elif pagina == "📋 Historial":
                     st.error(f"Error {r.status_code}")
             except Exception as e:
                 st.error(f"Error: {e}")   
-
-
-# elif pagina == "📋 Historial":
-#     st.title("📋 Historial de Predicciones")
-
-#     # ── Sección 1: Tabla de predicciones ──────────────────────────────────────
-#     st.subheader("1 · Predicciones de esta sesión")
-#     st.caption("Llama a `GET /predicciones`")
-
-#     if st.session_state.historial:
-#         df = pd.DataFrame(st.session_state.historial)
-#         df["churn"] = df["churn"].map({True: "✅ Sí", False: "❌ No"})
-#         df["prob"]  = df["prob"].apply(lambda x: f"{x*100:.1f}%")
-#         df.columns  = ["Endpoint", "Payload", "Churn", "Probabilidad"]
-#         st.dataframe(df[["Endpoint", "Churn", "Probabilidad"]], use_container_width=True)
-
-#         if st.button("🗑️ Limpiar historial"):
-#             st.session_state.historial = []
-#             st.rerun()
-#     else:
-#         st.info("Aún no hay predicciones en esta sesión. Ve a la página de Predicción y realiza algunas consultas.")
-
-#     st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-
-#     # ── Sección 2: Contador total ──────────────────────────────────────────────
-#     st.subheader("2 · Contador total de predicciones")
-#     st.caption("Llama a `GET /predicciones/count`")
-
-#     if st.button("🔢 Obtener contador de la API"):
-#         with st.spinner("Consultando la API..."):
-#             try:
-#                 r = requests.get(f"{API_URL}/api/v1/predicciones/count", timeout=10)
-#                 if r.status_code == 200:
-#                     data  = r.json()
-#                     total = data.get("total_predicciones", data.get("count", "—"))
-#                     st.metric("Total de predicciones realizadas", total)
-#                 else:
-#                     st.error(f"Error {r.status_code}: {r.json().get('error', 'desconocido')}")
-#             except requests.exceptions.Timeout:
-#                 st.warning("⏳ Timeout. Espera 30 s e inténtalo de nuevo.")
-#             except Exception as e:
-#                 st.error(f"Error: {e}")
