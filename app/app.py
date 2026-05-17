@@ -89,8 +89,8 @@ def health():
 def predict_credit_score(credit_score):
 
     # Validación del rango de credit_score
-    if credit_score < 350 or credit_score > 850:
-        return jsonify({"error": "credit_score debe estar entre 350 y 850"}), 400
+    # if credit_score < 350 or credit_score > 850:
+    #     return jsonify({"error": "credit_score debe estar entre 350 y 850"}), 400
 
     #Creamos un cliente
     Cliente = pd.DataFrame([{
@@ -132,12 +132,12 @@ def predict_quey():
     balance = request.args.get('balance', 76485.0, type=float) # si  no viene, usa la media
 
     # Validación de parámetros
-    # paises_validos = ['France', 'Spain', 'Germany']
-    # if country not in paises_validos:
-    #     return jsonify({"error": f"country debe ser uno de {paises_validos}"}), 400
+    paises_validos = ['France', 'Spain', 'Germany']
+    if country not in paises_validos:
+        return jsonify({"error": f"country debe ser uno de {paises_validos}"}), 400
 
-    # if age < 18 or age > 92:
-    #     return jsonify({"error": "age debe estar entre 18 y 92"}), 400
+    if age < 18 or age > 92:
+        return jsonify({"error": "age debe estar entre 18 y 92"}), 400
 
     #Creamos un cliente
     Cliente = pd.DataFrame([{
