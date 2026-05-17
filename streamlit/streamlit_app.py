@@ -64,7 +64,7 @@ def guardar_historial(endpoint, payload, result):
         "endpoint": endpoint,
         "payload":  payload,
         "churn":    result.get("churn"),
-        "prob":     result.get("churn_probability"),
+        "prob":     result.get("probabilidad churn"),
     })
 
 # ── Navegación lateral ─────────────────────────────────────────────────────────
