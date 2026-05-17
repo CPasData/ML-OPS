@@ -232,6 +232,74 @@ elif pagina == "📊 Predicción":
 elif pagina == "📋 Historial":
     st.title("📋 Historial de Predicciones")
 
+    # ── Sección 1: Predicciones de esta sesión + BD ───────────────────────────
+    st.subheader("1 · Predicciones guardadas en la BD")
+    st.caption("Llama a `GET /api/v1/predicciones`")
+
+    # Carga automática al entrar — sin necesidad de botón
+    try:
+        import pandas as pd
+        r = requests.get(f"{API_URL}/api/v1/predicciones", timeout=10)
+        if r.status_code == 200:
+            data = r.json()
+            if data["total"] == 0:
+                st.info("Aún no hay predicciones guardadas. Ve a Predicción y usa el formulario completo.")
+            else:
+                df = pd.DataFrame(data["predicciones"], columns=[
+                    "id", "credit_score", "country", "gender", "age",
+                    "tenure", "balance", "products_number", "credit_card",
+                    "active_member", "estimated_salary", "churn",
+                    "resultado", "probabilidad", "fecha"
+                ])
+                df["churn"] = df["churn"].map({1: "🔴 Abandona", 0: "🟢 Se queda"})
+                df["probabilidad"] = df["probabilidad"].apply(lambda x: f"{x*100:.1f}%")
+                st.dataframe(df[["id", "credit_score", "country", "age",
+                                "churn", "probabilidad", "fecha"]],
+                            use_container_width=True)
+    except Exception as e:
+        st.error(f"Error cargando BD: {e}")
+
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+
+    # ── Sección 2: Predicciones de esta sesión ────────────────────────────────
+    st.subheader("2 · Predicciones de esta sesión")
+    st.caption("Incluye todas las predicciones realizadas (path, query y POST)")
+
+    if st.session_state.historial:
+        df_sesion = pd.DataFrame(st.session_state.historial)
+        df_sesion["churn"] = df_sesion["churn"].map({1: "🔴 Abandona", 0: "🟢 Se queda", None: "—"})
+        df_sesion["prob"] = df_sesion["prob"].apply(lambda x: f"{x*100:.1f}%" if x is not None else "—")
+        df_sesion.columns = ["Endpoint", "Payload", "Churn", "Probabilidad"]
+        st.dataframe(df_sesion[["Endpoint", "Churn", "Probabilidad"]], use_container_width=True)
+
+        if st.button("🗑️ Limpiar historial de sesión"):
+            st.session_state.historial = []
+            st.rerun()
+    else:
+        st.info("Aún no hay predicciones en esta sesión.")
+
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+
+    # ── Sección 3: Contador total ──────────────────────────────────────────────
+    st.subheader("3 · Contador total de predicciones")
+    st.caption("Llama a `GET /api/v1/predicciones/count`")
+
+    if st.button("🔢 Obtener contador de la API"):
+        with st.spinner("Consultando la API..."):
+            try:
+                r = requests.get(f"{API_URL}/api/v1/predicciones/count", timeout=10)
+                if r.status_code == 200:
+                    data = r.json()
+                    st.metric("Total de predicciones realizadas", data.get("total_predicciones", "—"))
+                else:
+                    st.error(f"Error {r.status_code}")
+            except Exception as e:
+                st.error(f"Error: {e}")
+                
+'''
+elif pagina == "📋 Historial":
+    st.title("📋 Historial de Predicciones")
+
     # ── Sección 1: Tabla de predicciones ──────────────────────────────────────
     st.subheader("1 · Predicciones de esta sesión")
     st.caption("Llama a `GET /predicciones`")
@@ -252,6 +320,7 @@ elif pagina == "📋 Historial":
 
     st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
 
+
     # ── Sección 2: Contador total ──────────────────────────────────────────────
     st.subheader("2 · Contador total de predicciones")
     st.caption("Llama a `GET /predicciones/count`")
@@ -270,3 +339,4 @@ elif pagina == "📋 Historial":
                 st.warning("⏳ Timeout. Espera 30 s e inténtalo de nuevo.")
             except Exception as e:
                 st.error(f"Error: {e}")
+'''
