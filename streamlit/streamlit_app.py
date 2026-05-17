@@ -214,15 +214,15 @@ elif pagina == "📊 Predicción":
         }
         with st.spinner("Consultando la API..."):
             try:
-                r = requests.post(f"{API_URL}/predict", json=payload, timeout=30)
+                r = requests.post(f"{API_URL}/api/v1/predict", json=payload, timeout=15)
                 result = r.json()
                 if r.status_code == 200:
                     mostrar_resultado(result)
-                    guardar_historial("/predict (POST)", payload, result)
+                    guardar_historial(f"{API_URL}/api/v1/predict (POST)", payload, result)
                 else:
                     st.error(f"Error {r.status_code}: {result.get('error', 'desconocido')}")
             except requests.exceptions.Timeout:
-                st.warning("⏳ La API tardó demasiado. Espera 30 s e inténtalo de nuevo.")
+                st.warning("⏳ La API tardó demasiado. Espera 15 s e inténtalo de nuevo.")
             except Exception as e:
                 st.error(f"Error: {e}")
 
