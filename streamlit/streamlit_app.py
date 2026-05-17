@@ -281,7 +281,7 @@ elif pagina == "📋 Historial":
     st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
 
     # ── Sección 3: Contador total ──────────────────────────────────────────────
-    st.subheader("3 · Contador total de predicciones")
+    st.subheader("3 · Contador predicciones en BD")
     st.caption("Llama a `GET /api/v1/predicciones/count`")
 
     if st.button("🔢 Obtener contador de la API"):
