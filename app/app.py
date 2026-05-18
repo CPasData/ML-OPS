@@ -22,7 +22,7 @@ def home():
 # -----------------------------------------------------------------------
 # ----Cargamos el modelo al arrancar la app (solo se carga una vez)
 # -----------------------------------------------------------------------
-model = joblib.load(carpeta_script / '..' / 'models' / 'random_forest_churn.pkl')
+model = joblib.load(carpeta_script / '..' / 'models' / 'logistic_regression_churn.pkl')
 
 # -----------------------------------------------------------------------
 # Creamos la BD y la tabla predicciones si no existen
@@ -77,7 +77,7 @@ def server_error(e):
 
 @app.route("/health", methods=["GET"])
 def health():
-    return jsonify({"status": "ok", "model": "Random Forest"})
+    return jsonify({"status": "ok", "model": "Logistic Regression"})
 
 # -----------------------------------------------------------------------
 # Ruta 2 - Predicción por path 
