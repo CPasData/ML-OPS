@@ -232,7 +232,6 @@ elif pagina == "📊 Predicción":
     st.caption("Sube un CSV con los datos de varios clientes y obtén todas las predicciones de golpe")
 
     with st.expander("📄 Ver formato esperado del CSV"):
-        import pandas as pd
         ejemplo = pd.DataFrame([{
             "credit_score": 650, "age": 35, "tenure": 5,
             "balance": 50000, "products_number": 2, "credit_card": 1,
@@ -245,7 +244,6 @@ elif pagina == "📊 Predicción":
     csv_file = st.file_uploader("Sube tu CSV", type=["csv"])
 
     if csv_file is not None:
-        import pandas as pd
         try:
             df_csv = pd.read_csv(csv_file)
             st.write(f"**{len(df_csv)} clientes detectados.** Vista previa:")
@@ -311,7 +309,6 @@ elif pagina == "📋 Historial":
 
     # Carga automática al entrar — sin necesidad de botón
     try:
-        import pandas as pd
         r = requests.get(f"{API_URL}/api/v1/predicciones", timeout=10)
         if r.status_code == 200:
             data = r.json()
