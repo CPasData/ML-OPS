@@ -9,7 +9,7 @@
 
 ## <img src="img/descripcion.png" width="40" height="40">  Descripción
 
-API REST desarrollada con Flask que predice si un cliente bancario abandonará el banco (churn) usando un modelo de Machine Learning (Random Forest) entrenado con el dataset Bank Customer Churn de Kaggle.
+API REST desarrollada con Flask que predice si un cliente bancario de dará de baja el banco (churn) usando un modelo de Machine Learning (Logistc Regression) entrenado con el dataset Bank Customer Churn de Kaggle.
 
 El servicio recibe datos de un cliente, los procesa con el modelo y devuelve una predicción con la **probabilidad de abandono**.
 
@@ -71,19 +71,30 @@ ML-OPS/
 │
 ├── app/
 │   └── app.py                            ← API Flask
-│
-├── modelado/
-│   └── churn_model.ipynb                 ← notebook de entrenamiento
-│
-├── models/
-│   └── random_forest_churn.pkl           ← modelo entrenado
+│   └── consumo_app.ipynb                 ← notebook de prueba en local y render de cada petición
 │
 ├── data/
 │   └── Bank Customer Churn Prediction.csv
+│   └── demo50.csv
+│
+├── docs/
+│   └── demo.ipynb
+│   └── Presentacion_Productivizacion.pptx
+│
+├── img/
+│
+├── models/
+│   └── logistic_regression_churn.pkl     ← modelo seleccionado
+│   └── random_forest_churn.pkl           ← modelo entrenado
+│
+├── notebooks/
+│   └── churn_model.ipynb                 ← notebook de entrenamiento
+│
+├── streamlit/
+│   └── streamlit_app.py                  ← Frontend
 │
 ├── requirements.txt
-├── README.md
-└── portada_api_churn.png
+└── README.md
 ```
 
 ---
