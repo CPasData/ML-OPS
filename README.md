@@ -9,7 +9,7 @@
 
 ## <img src="img/descripcion.png" width="40" height="40">  Descripción
 
-API REST desarrollada con Flask que predice si un cliente bancario de dará de baja el banco (churn) usando un modelo de Machine Learning (Logistc Regression) entrenado con el dataset Bank Customer Churn de Kaggle.
+API REST desarrollada con Flask que predice si un cliente bancario de dará de baja el banco (churn) usando un modelo de Machine Learning (Logistic Regression) entrenado con el dataset Bank Customer Churn de Kaggle.
 
 El servicio recibe datos de un cliente, los procesa con el modelo y devuelve una predicción con la **probabilidad de abandono**.
 
@@ -53,7 +53,7 @@ uv sync
 ```
 
 ### 5. (Opcional) Reentrenar el modelo
-Si quieres regenerar el modelo, ejecuta el notebook `modelado/churn_model.ipynb` completo para generar el archivo `models/random_forest_churn.pkl`
+Si quieres regenerar el modelo, ejecuta el notebook `modelado/churn_model.ipynb` completo para generar el archivo `models/logistic_regression_churn.pkl`
 
 ### 6. Ejecutar la API
 ```bash
@@ -108,7 +108,7 @@ Comprueba que la API está funcionando.
 ```json
 {
     "status": "ok",
-    "modelo": "Random Forest",
+    "modelo": "Logistic Regression",
     "descripcion": "API de predicción de Churn bancario funcionando"
 }
 ```
@@ -214,12 +214,12 @@ Cuenta el total de predicciones realizadas.
 
 | Parámetro | Valor |
 |---|---|
-| Algoritmo | Random Forest Classifier |
+| Algoritmo | Logistic Regression |
 | Dataset | Bank Customer Churn (Kaggle) |
 | Features | 10 variables (numéricas y categóricas) |
 | Target | churn (0 = se queda, 1 = abandona) |
-| ROC-AUC | 0.8595 |
-| Balanced Accuracy | 0.7777 |
+| ROC-AUC | 0.83 |
+| Balanced Accuracy | 0.76 |
 | Optimización | GridSearchCV con StratifiedKFold (5 folds) |
 
 ---
@@ -239,7 +239,7 @@ Cuenta el total de predicciones realizadas.
 
 - **Python 3.13**
 - **Flask** — API REST
-- **scikit-learn** — modelo Random Forest
+- **scikit-learn** — modelo logistic regression
 - **pandas** — procesamiento de datos
 - **SQLite** — almacenamiento de predicciones
 - **Render** — despliegue de la API
