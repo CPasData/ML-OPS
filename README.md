@@ -244,3 +244,15 @@ Cuenta el total de predicciones realizadas.
 - **SQLite** — almacenamiento de predicciones
 - **Render** — despliegue de la API
 - **Streamlit** — interfaz de usuario
+
+---
+
+## ⚖️ Licencia y Derechos de Autor
+
+Este proyecto ha sido desarrollado con fines educativos por estudiantes.
+
+Se distribuye bajo la licencia MIT, lo que permite su uso, copia, modificación y distribución, siempre que se incluya la atribución correspondiente a los autores.
+
+© 2026 – Carlos Pascual, Nadia Llamoca
+
+---
